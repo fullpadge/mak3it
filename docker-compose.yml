@@ -13,8 +13,7 @@ services:
       - STRIPE_PUBLISHABLE_KEY=${STRIPE_PUBLISHABLE_KEY}
       - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
       - DOCKER_HOST_ADDR=host.docker.internal
-      - ACTUAL_HOST_WORKSPACE_PATH=${WORKSPACE_BASE:-/workspace}
-      - SANDBOX_URL=http://sandbox:5005
+      - ACTUAL_HOST_WORKSPACE_PATH=/workspace
     ports:
       - "5005:5005"
     volumes:
@@ -22,23 +21,9 @@ services:
       - ~/.cache:/.cache
       - ./workspace:/workspace
       - ./data:/app/data
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     command: make run
     tty: true
     stdin_open: true
     restart: always
-    depends_on:
-      - sandbox
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-
-  sandbox:
-    image: hexdolemonai/lemon-runtime-sandbox:latest
-    container_name: mak3it-sandbox
-    privileged: true
-    restart: always
-    tty: true
-    stdin_open: true
-    volumes:
-      - ./workspace:/workspace
-      - ./data:/app/data
-      - ~/.cache:/.cache
