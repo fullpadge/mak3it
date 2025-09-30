@@ -8,11 +8,11 @@
         <div class="menu-actions">
           <div class="menu-button" @click="changeMode('task')">
             <Edit />
-            <span class="truncate">New Agent</span>
+            <span class="truncate">Nouveau Skouik</span>
           </div>
           <div class="menu-button store-button" :class="{ active: isStorePage }" @click="toStore">
             <Store />
-            <span class="truncate">Agent Store</span>
+            <span class="truncate">Mak3it.org</span>
           </div>
         </div>
         <AgentList />
@@ -40,7 +40,7 @@
 
         <!-- Footer Social Links -->
         <div class="footer-social">
-          <a-tooltip title="Homepage">
+          <a-tooltip title="Informateur Mak3it">
             <a href="https://www.mak3it.org" target="_blank" rel="noopener noreferrer" class="footer-social-link">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="footer-social-icon" xmlns="http://www.w3.org/2000/svg">
                 <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
