@@ -2,8 +2,8 @@ version: "3.9"
 
 services:
   mak3it:
-    build: .                          # <-- on build depuis TON Dockerfile
-    image: fullpadge/mak3it:latest    # <-- nomme ton image
+    build: .
+    image: fullpadge/mak3it:latest
     container_name: mak3it-app
     environment:
       - NODE_ENV=production
@@ -18,7 +18,15 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - /root/mak3it/workspace:/workspace
       - /root/mak3it/data:/app/data
-    restart: always                   # <-- pour relancer auto si crash
-    stdin_open: true
-    tty: true
+    restart: always
     command: make run
+    depends_on:
+      - sandbox
+
+  sandbox:
+    image: hexdolemonai/lemon-runtime-sandbox:latest
+    container_name: mak3it-sandbox
+    privileged: true
+    restart: always
+    volumes:
+      - /root/mak3it/workspace:/workspace
