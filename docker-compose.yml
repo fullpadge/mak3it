@@ -1,20 +1,24 @@
+version: "3.9"
 
 services:
-  lemon:
-    image: hexdolemonai/lemon:latest
-    container_name: lemon-app
+  mak3it:
+    build: .                          # <-- on build depuis TON Dockerfile
+    image: fullpadge/mak3it:latest    # <-- nomme ton image
+    container_name: mak3it-app
     environment:
-      - DOCKER_HOST_ADDR=host.docker.internal
-      - ACTUAL_HOST_WORKSPACE_PATH=${WORKSPACE_BASE:-$PWD/workspace}
+      - NODE_ENV=production
+      - STRIPE_PUBLISHABLE_KEY=${STRIPE_PUBLISHABLE_KEY}
+      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
+      - COMPANY_NAME=Mak3it
+      - COMPANY_EMAIL=contact@mak3it.com
+      - COMPANY_WEBSITE=https://mak3it.org
     ports:
       - "5005:5005"
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ~/.cache:/.cache
-      - ${WORKSPACE_BASE:-$PWD/workspace}:/app/workspace
-      - ${WORKSPACE_BASE:-$PWD/data}:/app/data
+      - /root/mak3it/workspace:/workspace
+      - /root/mak3it/data:/app/data
+    restart: always                   # <-- pour relancer auto si crash
     stdin_open: true
     tty: true
     command: make run
